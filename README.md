@@ -1,31 +1,33 @@
 # Booking.com Web Automation Test Suite
 
-A Page Object Model (POM)-based Selenium automation framework for testing the Booking.com website's sign-in flow. This project demonstrates modular, maintainable test automation structure with multi-browser support and environment-based configuration.
+A Page Object Model (POM)-based Selenium automation framework for testing the Booking.com website's sign-in flow. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
 
-BookingWebTest_POM/  
+SeleniumTestNG_POM/  
 ├── src/  
-│ ├── main/  
-│ │ ├── java/com/booking/qa/  
-│ │ │ ├── base/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Base setup logic (WebDriver, config)  
-│ │ │ ├── config/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Configuration (.properties file)  
-│ │ │ ├── pages/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Page Object classes  
-│ │ │ └── util/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
-│ └── test/  
-│ └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases  
-├── config.properties   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# URL, browser, wait settings  
-├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Secure email config (dotenv)  
-├── .gitignore &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Ignored files/folders  
-└── pom.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Maven dependencies and plugins  
+│   ├── main/  
+│   │   ├── java/com/booking/qa/  
+│   │   │   ├── base/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Base setup logic (TestBase with suite-level setup)  
+│   │   │   ├── config/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Configuration (.properties file)  
+│   │   │   ├── pages/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Page Object classes  
+│   │   │   └── util/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
+│   └── test/  
+│       └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases (BaseTest, HomeTest, SigninTest)  
+├── config.properties &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # URL, browser, wait settings  
+├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Secure email config (dotenv)  
+├── testng.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # TestNG suite configuration  
+├── .gitignore &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Ignored files/folders  
+└── pom.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Maven dependencies and plugins
 
 
 ## Features
 
-- Selenium WebDriver with Chrome and Firefox support
-- TestNG-based test lifecycle
-- Dotenv Integration for secure credential management
-- WebDriverManager for automatic driver management
-- Page Object Model (POM) design pattern
-- Tab handling and navigation
+- Selenium WebDriver with Chrome and Firefox support 
+- TestNG-based test orchestration with suite-level setup/teardown 
+- Dotenv Integration for secure credential management 
+- WebDriverManager for automatic driver management 
+- Page Object Model (POM) design pattern 
+- Continuous test execution flow across multiple test classes 
+- Tab handling and navigation 
 - Explicit and implicit waits
 
 ## Setup Instructions
@@ -48,20 +50,35 @@ Create a .env file in the root directory:
 4.  **Run the Tests**  
     Execute the test suite (including tests from both HomeTest and SigninTest):
    ```bash
-   mvn clean install 
-```
-* No need to run HomeTest separately, it is inherited and executed automatically.
+   mvn test
+  ```
+   No need to run HomeTest separately, it is inherited and executed automatically.
+   ```bash
+   mvn test -DsuiteXmlFile=testng.xml
+  ```
 
 ## Test Flow Overview
-1. ### HomeTest.java
-- Navigates to the homepage
-- Clicks on the sign-in button
-- Validates the heading text on the sign-in page
+The tests execute in a continuous flow within a single browser session:
 
-2. ### SigninTest.java
-- Inputs the email address from .env
-- Navigates to ProtonMail in a new browser tab
-- Verifies ProtonMail opened successfully
+
+1. ### Suite Setup:
+-  Browser opens once before all tests
+2. ### HomeTest
+- Navigates to homepage and clicks sign-in button
+3. ### SigninTest
+- Inputs the email address from .env 
+- Navigates to ProtonMail in a new browser tab 
+- Verifies ProtonMail opened successfullyNavigates to homepage and clicks sign-in button2. ### HomeTest
+4. ### Suite Teardown
+- Browser closes once after all tests complete
+
+## TestNG Configuration
+The test execution is controlled by `testng.xml` which:
+- Defines test execution order between classes 
+- Maintains a single browser session across all tests 
+- Uses `preserve-order="true"` to ensure sequential execution 
+- Sets up dependencies between test methods
+
 
 ## ️ Tech Stack
 
@@ -75,9 +92,11 @@ Create a .env file in the root directory:
 | Dotenv Java        | Loads env variables from `.env` file      |
 
 # Notes
-- Ensure browser pop-ups or tab opening restrictions are disabled.
-- ProtonMail is accessed via JS tab injection due to CDP issues with newer browsers.
-- Credentials are managed securely via the .env file (do not commit this to version control).
+- The framework maintains a single browser session across all test classes 
+- Test execution order is controlled through TestNG dependencies and configuration 
+- Ensure browser pop-ups or tab opening restrictions are disabled 
+- ProtonMail is accessed via JS tab injection due to CDP issues with newer browsers 
+- Credentials are managed securely via the .env file (do not commit this to version control)
 
 # Future Improvements
 - Implement OTP reading from ProtonMail inbox
