@@ -1,11 +1,14 @@
 package com.booking.qa.pages;
 import com.booking.qa.base.TestBase;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 
-    public class EmailLoginPage extends TestBase {
+    public class EmailLoginPage {
+        private WebDriver driver;
 
-        public EmailLoginPage() {
+        public EmailLoginPage(WebDriver driver) {
+            this.driver = driver;
 
 
             PageFactory.initElements(driver, this);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Booking Test Suite" parallel="false">
+    <test name="Home Page Test">
+        <classes>
+            <class name="com.booking.qa.testcases.HomeTest" />
+        </classes>
+    </test>
+    <test name="Signin Test">
+        <classes>
+            <class name="com.booking.qa.testcases.SigninTest" />
+        </classes>
+    </test>
+</suite>
