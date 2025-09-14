@@ -6,14 +6,15 @@ import com.booking.qa.pages.SigninPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
-public class HomeTest extends TestBase {
+public class HomeTest extends BaseTest {
 
-    protected HomePage homePage;
-    protected SigninPage signinPage;
+  //  protected HomePage homePage;
+    //protected SigninPage signinPage;
 
 
-    @BeforeClass(alwaysRun = true)
+    /*@BeforeClass(alwaysRun = true)
     public void setUpBase() {
         initialization();
         homePage = new HomePage();
@@ -22,14 +23,15 @@ public class HomeTest extends TestBase {
         // Perform assertion once
         assertSigninPageTitle();
     }
-
+*/
+    @Test
     public void assertSigninPageTitle() {
+        HomePage homePage = new HomePage(driver, wait);
+        SigninPage signinPage = homePage.clickSigninButton();
+
+        // Perform assertion
         String actualTitle = signinPage.validateSignInTitle();
         Assert.assertEquals(actualTitle, "Sign in or create an account", "Signin page title mismatch!");
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        quitDriver();
-    }
 }

@@ -3,16 +3,20 @@ package com.booking.qa.pages;
 import com.booking.qa.base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 
-public class SigninPage extends TestBase {
+public class SigninPage {
 
-    String firstTab;
+    private WebDriver driver;
+    private WebDriverWait wait;
+    private String firstTab;
 
     // Page Factory - Object Repository: ;
     private By emailAddress = By.id("username");
@@ -23,7 +27,9 @@ public class SigninPage extends TestBase {
     WebElement textAfterSigninBtn;
 
     // Initializing page factory/ page objects
-    public SigninPage() {
+    public SigninPage(WebDriver driver, WebDriverWait wait) {
+        this.driver = driver;
+        this.wait = wait;
         PageFactory.initElements(driver, this);
         firstTab = driver.getWindowHandle();
 
@@ -40,7 +46,7 @@ public class SigninPage extends TestBase {
         emailField.sendKeys(eField);
         contWithEmailButton.click();
 
-        return new VerificationCodePage();
+        return new VerificationCodePage(driver, wait);
     }
 
     public EmailLoginPage newTab(){
@@ -51,6 +57,6 @@ public class SigninPage extends TestBase {
         driver.switchTo().window(tabs.get(1));
       //  driver.get("https://account.proton.me/mail");
 
-        return new EmailLoginPage();
+        return new EmailLoginPage(driver);
     }
 }
