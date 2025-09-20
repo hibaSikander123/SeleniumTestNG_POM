@@ -1,17 +1,24 @@
 # Booking.com Web Automation Test Suite
 
-A Page Object Model (POM)-based Selenium automation framework for testing the Booking.com website's sign-in flow. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
+A Page Object Model (POM)-based Selenium automation framework for testing the Booking.com website's complete sign-in and verification flow. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
 
 SeleniumTestNG_POM/  
 ├── src/  
 │   ├── main/  
 │   │   ├── java/com/booking/qa/  
-│   │   │   ├── base/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Base setup logic (TestBase with suite-level setup)  
+│   │   │   ├── base/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Base setup logic (TestBase with suite-level setup) \
 │   │   │   ├── config/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Configuration (.properties file)  
 │   │   │   ├── pages/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Page Object classes  
+│   │   │   │   ├── HomePage \
+│   │   │   │   ├── SigninPage \
+│   │   │   │   ├── VerificationCodePage \
 │   │   │   └── util/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
 │   └── test/  
-│       └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases (BaseTest, HomeTest, SigninTest)  
+│   │   └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases \
+│   │   │   ├── BaseTest \
+│   │   │   ├── HomeTest \
+│   │   │   ├── SigninTest \
+│   │   │   ├── VerificationCodeTest \
 ├── config.properties &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # URL, browser, wait settings  
 ├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Secure email config (dotenv)  
 ├── testng.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # TestNG suite configuration  
@@ -21,6 +28,8 @@ SeleniumTestNG_POM/
 
 ## Features
 
+- Complete authentication flow, testing the entire sign-in process including email verification
+- Email Integration involving the Logging into ProtonMail to retrieve verification code
 - Selenium WebDriver with Chrome and Firefox support 
 - TestNG-based test orchestration with suite-level setup/teardown 
 - Dotenv Integration for secure credential management 
@@ -29,6 +38,11 @@ SeleniumTestNG_POM/
 - Continuous test execution flow across multiple test classes 
 - Tab handling and navigation 
 - Explicit and implicit waits
+
+## Prerequisites
+- Java 21 or higher 
+- Maven 3.6 or higher 
+- ProtonMail account (for email verification)
 
 ## Setup Instructions
 
@@ -40,8 +54,10 @@ SeleniumTestNG_POM/
 2. **Configure Environment Variables**  
 Create a .env file in the root directory:
    ```bash
-   EMAIL = your_email@example.com  
-   PROPERTIES_FILE_PATH = your_file_path_of_config.properties_file
+    PROPERTIES_FILE_PATH = "your_file_path_of_config.properties_file"
+    USER_EMAIL = "your_protonmail@email.com"
+    PASSWORD = "your_protonmail_password"
+ 
 3.  **Download Dependencies & Verify Setup**  
     Ensure Maven is installed, then run:
    ```bash
@@ -57,20 +73,29 @@ Create a .env file in the root directory:
    mvn test -DsuiteXmlFile=testng.xml
   ```
 
-## Test Flow Overview
-The tests execute in a continuous flow within a single browser session:
+## Complete Test Flow Overview
+The tests execute in a continuous flow within a single browser session using advanced multi-tab handling:
 
 
-1. ### Suite Setup:
--  Browser opens once before all tests
-2. ### HomeTest
-- Navigates to homepage and clicks sign-in button
-3. ### SigninTest
-- Inputs the email address from .env 
-- Navigates to ProtonMail in a new browser tab 
-- Verifies ProtonMail opened successfullyNavigates to homepage and clicks sign-in button2. ### HomeTest
-4. ### Suite Teardown
-- Browser closes once after all tests complete
+1. ### Suite Setup (BaseTest)
+- Single browser initialization 
+- Configuration loading
+2. ### Navigation to Signin Process (HomeTest)
+- Navigates to Booking.com homepage 
+- Clicks sign-in button 
+- Verifies sign-in page title
+3. ### Sign-in Process (SigninTest)
+- Enters email address from environment variables 
+- Opens ProtonMail in a new browser tab 
+- Verifies ProtonMail URL
+4. ### Email Verification (VerificationCodeTest)
+- Logs into ProtonMail account 
+- Navigates to inbox and retrieves latest email 
+- Extracts verification code from email body 
+- Returns to Booking.com tab and inputs verification code
+- Verifies successful authentication
+5. ### Suite Teardown (BaseTest)
+- Browser cleanup and session termination
 
 ## TestNG Configuration
 The test execution is controlled by `testng.xml` which:
@@ -95,11 +120,9 @@ The test execution is controlled by `testng.xml` which:
 - The framework maintains a single browser session across all test classes 
 - Test execution order is controlled through TestNG dependencies and configuration 
 - Ensure browser pop-ups or tab opening restrictions are disabled 
-- ProtonMail is accessed via JS tab injection due to CDP issues with newer browsers 
 - Credentials are managed securely via the .env file (do not commit this to version control)
 
 # Future Improvements
-- Implement OTP reading from ProtonMail inbox
 - Extend tests for flight booking workflows
 
 

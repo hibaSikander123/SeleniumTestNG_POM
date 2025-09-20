@@ -1,6 +1,5 @@
 package com.booking.qa.pages;
 
-import com.booking.qa.base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -16,13 +15,10 @@ public class SigninPage {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    private String firstTab;
 
-    // Page Factory - Object Repository: ;
+    // Page Factory - Object Repository:
     private By emailAddress = By.id("username");
-
     private By contWithEmailBtn = By.xpath("//span[text() = \"Continue with email\"]");
-
     @FindBy(xpath = "//span[text() =\"Sign in or create an account\"]")
     WebElement textAfterSigninBtn;
 
@@ -31,8 +27,6 @@ public class SigninPage {
         this.driver = driver;
         this.wait = wait;
         PageFactory.initElements(driver, this);
-        firstTab = driver.getWindowHandle();
-
     }
 
     // Actions
@@ -45,18 +39,18 @@ public class SigninPage {
         WebElement contWithEmailButton = wait.until(ExpectedConditions.elementToBeClickable(contWithEmailBtn));
         emailField.sendKeys(eField);
         contWithEmailButton.click();
-
         return new VerificationCodePage(driver, wait);
     }
 
-    public EmailLoginPage newTab(){
+    public VerificationCodePage newTab(){
 
         // Switch to Tab 2 (Email Login) --- workaround for new tab using javascript due to CDP version issue
         ((JavascriptExecutor) driver).executeScript("window.open('https://account.proton.me/mail','_blank');");
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
-      //  driver.get("https://account.proton.me/mail");
-
-        return new EmailLoginPage(driver);
+        return new VerificationCodePage(driver, wait);
     }
+
+
+
 }

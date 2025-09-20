@@ -8,9 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Collections;
@@ -25,15 +23,16 @@ public class TestBase {
     public static WebDriverWait wait;
     public String email;
     public String propertiesFilePath;
-
-
-
+    public String userEmail;
+    public String password;
 
     public TestBase(){
         // Load environment variables
         Dotenv dotenv = Dotenv.load();
         email = dotenv.get("EMAIL");
         propertiesFilePath = dotenv.get("PROPERTIES_FILE_PATH");
+        userEmail = dotenv.get("USER_EMAIL");
+        password = dotenv.get("PASSWORD");
 
         // Load properties file
         prop = new Properties();

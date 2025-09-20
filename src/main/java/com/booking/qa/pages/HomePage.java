@@ -1,6 +1,5 @@
 package com.booking.qa.pages;
 
-import com.booking.qa.base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
