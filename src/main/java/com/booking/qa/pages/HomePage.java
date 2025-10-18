@@ -11,8 +11,10 @@ public class HomePage{
 
     private WebDriver driver;
     private WebDriverWait wait;
+
     private By signInButtonLocator = By.xpath("//a[@data-testid = 'header-sign-in-button']");
 
+    // Initializing page factory / page object
     public HomePage(WebDriver driver, WebDriverWait wait)
     {
         this.driver = driver;
@@ -20,6 +22,7 @@ public class HomePage{
         PageFactory.initElements(driver, this);
     }
 
+    // Click signin button to go to sign in page
     public SigninPage clickSigninButton() {
         WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(signInButtonLocator));
         signInButton.click();
