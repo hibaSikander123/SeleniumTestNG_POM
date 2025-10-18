@@ -12,7 +12,7 @@ public class VerificationCodeTest extends BaseTest {
 
     @BeforeMethod
     public void settingUp() {
-        verificationCodePage = new VerificationCodePage(driver, wait); // Initialize once
+        verificationCodePage = new VerificationCodePage(driver, wait);
     }
 
     @Test(dependsOnMethods = "com.booking.qa.testcases.SigninTest.newTabTest")
@@ -22,7 +22,7 @@ public class VerificationCodeTest extends BaseTest {
         Assert.assertEquals(userEmail, userEmail);
         Assert.assertEquals(password, password);
         String validateLogin = verificationCodePage.validateLoginEmail();
-        Assert.assertEquals(validateLogin, "Inbox", "Email or password mismatch!");
+        Assert.assertEquals(validateLogin, "Inbox", "Email or password is incorrect!");
     }
 
     @Test(dependsOnMethods = "emailLoginTest")
@@ -43,6 +43,6 @@ public class VerificationCodeTest extends BaseTest {
     public void feedVCodeTest() {
         verificationCodePage.setVerificationCode(vCode);
         verifyVCodeAccepted = verificationCodePage.verifyVCodeAcceptance();
-        Assert.assertEquals(verifyVCodeAccepted, "Find your next stay", "Verification has not been successful");
+        Assert.assertEquals(verifyVCodeAccepted, "Flights", "Verification has not been successful");
     }
 }

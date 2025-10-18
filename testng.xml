@@ -6,6 +6,8 @@
             <class name="com.booking.qa.testcases.HomeTest"/>
             <class name="com.booking.qa.testcases.SigninTest"/>
             <class name="com.booking.qa.testcases.VerificationCodeTest"/>
+            <class name="com.booking.qa.testcases.FlightsTabTest"/>
+            <class name="com.booking.qa.testcases.SelectFlightTest"/>
         </classes>
     </test>
 </suite>

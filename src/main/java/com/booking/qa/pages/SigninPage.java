@@ -16,24 +16,24 @@ public class SigninPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Page Factory - Object Repository:
     private By emailAddress = By.id("username");
     private By contWithEmailBtn = By.xpath("//span[text() = \"Continue with email\"]");
+
     @FindBy(xpath = "//span[text() =\"Sign in or create an account\"]")
     WebElement textAfterSigninBtn;
 
-    // Initializing page factory/ page objects
+    // Initializing page factory / page object
     public SigninPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
         PageFactory.initElements(driver, this);
     }
 
-    // Actions
     public String validateSignInTitle() {
         return textAfterSigninBtn.getText();
     }
 
+    // Enter email address in signin page
     public VerificationCodePage signin(String eField){
         WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(emailAddress));
         WebElement contWithEmailButton = wait.until(ExpectedConditions.elementToBeClickable(contWithEmailBtn));
@@ -43,14 +43,11 @@ public class SigninPage {
     }
 
     public VerificationCodePage newTab(){
-
-        // Switch to Tab 2 (Email Login) --- workaround for new tab using javascript due to CDP version issue
+        // Switch to Tab 2 (for proton email login)
+        // Opening and going to second tab using javascript (workaround used due to CDP version issue)
         ((JavascriptExecutor) driver).executeScript("window.open('https://account.proton.me/mail','_blank');");
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         return new VerificationCodePage(driver, wait);
     }
-
-
-
 }

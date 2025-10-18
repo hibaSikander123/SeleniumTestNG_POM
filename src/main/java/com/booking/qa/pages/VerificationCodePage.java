@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VerificationCodePage {
 
@@ -24,12 +23,12 @@ public class VerificationCodePage {
     private By codeElement = By.xpath("//p[contains(., 'Dear') or contains(., 'Hi')]/parent::span/child::table/tbody/tr/td");
     private By verifyButton = By.xpath("//button[@type = \"submit\"]");
     private By latestEmail= By.xpath("//span[@data-testid='recipients:sender']//bdi[@data-testid='recipient-label']");
-    private By loggedInPageTitle = By.xpath("//div[@data-testid='hero-banner-solid-bg-desktop']//span[@data-testid='herobanner-title1']");
-    private By emailInbox = By.xpath("//div[@class = 'w-full shrink-0']//div[@style='--index: 0;']");
+    private By locatorConfirmLogin = By.xpath("//span[contains(., 'Flights')]");
 
     @FindBy(xpath = "//div[@class = \"w-full\"]//h2[@title = \"Inbox\"]")
     WebElement inboxTitle;
 
+    // Initializing page factory / page object
     public VerificationCodePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
@@ -41,6 +40,7 @@ public class VerificationCodePage {
         return driver.getCurrentUrl();
     }
 
+    // Login to proton email
     public VerificationCodePage loginEmail(String userEmail, String password) {
         WebElement userEmailField = wait.until(ExpectedConditions.visibilityOfElementLocated(usernameEmail));
         WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(passwordEmail));
@@ -55,8 +55,10 @@ public class VerificationCodePage {
         return inboxTitle.getText();
     }
 
+    // Open latest email message received
     public void goToLatestInbox() {
         driver.navigate().refresh();
+        By emailInbox = By.xpath("//div[@class = 'w-full shrink-0']//div[@style='--index: 0;']");
         WebElement emailMsg = emailWait.until(ExpectedConditions.elementToBeClickable(emailInbox));
         emailMsg.click();
     }
@@ -66,6 +68,7 @@ public class VerificationCodePage {
         return latestEmailTitle.getText();
     }
 
+    // fetch verification code from email and then go back to the first tab
     public String getVerificationCode() {
         WebElement iframe = driver.findElement(iframeLocator);
         driver.switchTo().frame(iframe);
@@ -77,6 +80,7 @@ public class VerificationCodePage {
         return verificationCode;
     }
 
+    // Enter verification code in the sign-in verification part present at first tab
     public void setVerificationCode(String verificationCode) {
         for (int i = 0; i < verificationCode.length(); i++) {
             String codeChar = String.valueOf(verificationCode.charAt(i));
@@ -87,7 +91,7 @@ public class VerificationCodePage {
     }
 
     public String verifyVCodeAcceptance() {
-        WebElement pageTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(loggedInPageTitle));
-        return pageTitle.getText();
+        WebElement confirmLogin = wait.until(ExpectedConditions.visibilityOfElementLocated(locatorConfirmLogin));
+        return confirmLogin.getText();
     }
     }

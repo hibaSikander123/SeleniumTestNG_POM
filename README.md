@@ -1,6 +1,6 @@
 # Booking.com Web Automation Test Suite
 
-A Page Object Model (POM)-based Selenium automation framework for testing the Booking.com website's complete sign-in and verification flow. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
+A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete sign-in authentication flow and flight booking functionality. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
 
 SeleniumTestNG_POM/  
 ├── src/  
@@ -12,6 +12,8 @@ SeleniumTestNG_POM/
 │   │   │   │   ├── HomePage \
 │   │   │   │   ├── SigninPage \
 │   │   │   │   ├── VerificationCodePage \
+│   │   │   │   ├── FlightsTabPage \
+│   │   │   │   ├── SelectFlightPage \
 │   │   │   └── util/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
 │   └── test/  
 │   │   └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases \
@@ -19,6 +21,8 @@ SeleniumTestNG_POM/
 │   │   │   ├── HomeTest \
 │   │   │   ├── SigninTest \
 │   │   │   ├── VerificationCodeTest \
+│   │   │   ├── FlightsTabTest \
+│   │   │   ├── SelectFlightTest \
 ├── config.properties &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # URL, browser, wait settings  
 ├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Secure email config (dotenv)  
 ├── testng.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # TestNG suite configuration  
@@ -28,14 +32,14 @@ SeleniumTestNG_POM/
 
 ## Features
 
-- Complete authentication flow, testing the entire sign-in process including email verification
+- Complete authentication flow, end-to-end testing of sign-in process including email verification
 - Email Integration involving the Logging into ProtonMail to retrieve verification code
+- Flight Booking Automation: Comprehensive flight search and selection workflow
+- Advanced Retry Logic: Smart date selection and flight availability handling
 - Selenium WebDriver with Chrome and Firefox support 
 - TestNG-based test orchestration with suite-level setup/teardown 
 - Dotenv Integration for secure credential management 
-- WebDriverManager for automatic driver management 
 - Page Object Model (POM) design pattern 
-- Continuous test execution flow across multiple test classes 
 - Tab handling and navigation 
 - Explicit and implicit waits
 
@@ -64,15 +68,11 @@ Create a .env file in the root directory:
    mvn clean install 
 ```
 4.  **Run the Tests**  
-    Execute the test suite (including tests from both HomeTest and SigninTest):
-   ```bash
-   mvn test
-  ```
-   No need to run HomeTest separately, it is inherited and executed automatically.
+    Run with specific TestNG suite:
    ```bash
    mvn test -DsuiteXmlFile=testng.xml
   ```
-
+   
 ## Complete Test Flow Overview
 The tests execute in a continuous flow within a single browser session using advanced multi-tab handling:
 
@@ -94,7 +94,19 @@ The tests execute in a continuous flow within a single browser session using adv
 - Extracts verification code from email body 
 - Returns to Booking.com tab and inputs verification code
 - Verifies successful authentication
-5. ### Suite Teardown (BaseTest)
+5. ### Flight Search (FlightsTabTest)
+-  Navigates to Flights tab and handles cookie consent 
+- Selects source location (Berlin) with fallback logic
+- Selects destination location (Paris)
+- Smart calendar date selection with retry logic
+- Adds additional passenger
+- Flight search with automatic retry for unavailable dates
+6. ### Flight Selection (SelectFlightTest)
+- Filters flights by cheapest option
+- Selects cheapest flight
+- Chooses standard ticket type 
+- Navigates to traveler details page
+7. ### Suite Teardown (BaseTest)
 - Browser cleanup and session termination
 
 ## TestNG Configuration
@@ -117,12 +129,10 @@ The test execution is controlled by `testng.xml` which:
 | Dotenv Java        | Loads env variables from `.env` file      |
 
 # Notes
-- The framework maintains a single browser session across all test classes 
-- Test execution order is controlled through TestNG dependencies and configuration 
 - Ensure browser pop-ups or tab opening restrictions are disabled 
 - Credentials are managed securely via the .env file (do not commit this to version control)
 
 # Future Improvements
-- Extend tests for flight booking workflows
+- Extend tests for further flight booking workflows
 
 
