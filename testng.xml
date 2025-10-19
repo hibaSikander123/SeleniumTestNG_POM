@@ -8,6 +8,7 @@
             <class name="com.booking.qa.testcases.VerificationCodeTest"/>
             <class name="com.booking.qa.testcases.FlightsTabTest"/>
             <class name="com.booking.qa.testcases.SelectFlightTest"/>
+            <class name="com.booking.qa.testcases.TravelerDetailsTest"/>
         </classes>
     </test>
 </suite>

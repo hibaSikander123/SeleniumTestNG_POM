@@ -13,7 +13,7 @@ public class FlightsTabTest extends BaseTest {
         flightsTabPage = new FlightsTabPage(driver, wait);
     }
 
-    @Test (dependsOnMethods = "com.booking.qa.testcases.VerificationCodeTest.feedVCodeTest")
+    @Test(dependsOnMethods = "com.booking.qa.testcases.VerificationCodeTest.feedVCodeTest")
     public void goToFlightsTabTest()
     {
         flightsTabPage.goToFlightsTab();
