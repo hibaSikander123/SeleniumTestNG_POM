@@ -21,18 +21,47 @@ public class TestBase {
     public static Properties prop;
     public static long EXPLICIT_WAIT;
     public static WebDriverWait wait;
-    public String email;
+   // public String email;
     public String propertiesFilePath;
     public String userEmail;
     public String password;
+    public String firstName1;
+    public String lastName1;
+    public String birthMonth1;
+    public String nationality1;
+    public String birthDate1;
+    public String birthYear1;
+    public String firstName2;
+    public String lastName2;
+    public String birthMonth2;
+    public String nationality2;
+    public String birthDate2;
+    public String birthYear2;
+    public String phoneNum;
 
     public TestBase(){
         // Load environment variables
         Dotenv dotenv = Dotenv.load();
-        email = dotenv.get("EMAIL");
+
         propertiesFilePath = dotenv.get("PROPERTIES_FILE_PATH");
         userEmail = dotenv.get("USER_EMAIL");
         password = dotenv.get("PASSWORD");
+
+        firstName1 = dotenv.get("FIRSTNAME1");
+        lastName1 = dotenv.get("LASTNAME1");
+        birthMonth1 = dotenv.get("BIRTHMONTH1");
+        nationality1 = dotenv.get("NATIONALITY1");
+        birthDate1 = dotenv.get("BIRTHDATE1");
+        birthYear1 = dotenv.get("BIRTHYEAR1");
+
+        firstName2 = dotenv.get("FIRSTNAME2");
+        lastName2 = dotenv.get("LASTNAME2");
+        birthMonth2 = dotenv.get("BIRTHMONTH2");
+        nationality2 = dotenv.get("NATIONALITY2");
+        birthDate2 = dotenv.get("BIRTHDATE2");
+        birthYear2 = dotenv.get("BIRTHYEAR2");
+
+        phoneNum = dotenv.get("PHONENUM");
 
         // Load properties file
         prop = new Properties();

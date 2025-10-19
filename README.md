@@ -1,6 +1,6 @@
 # Booking.com Web Automation Test Suite
 
-A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete sign-in authentication flow and flight booking functionality. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
+A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete sign-in authentication flow and flight booking functionality including travelers details entry. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
 
 SeleniumTestNG_POM/  
 ├── src/  
@@ -14,6 +14,7 @@ SeleniumTestNG_POM/
 │   │   │   │   ├── VerificationCodePage \
 │   │   │   │   ├── FlightsTabPage \
 │   │   │   │   ├── SelectFlightPage \
+│   │   │   │   ├── TravelerDetailsPage \
 │   │   │   └── util/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
 │   └── test/  
 │   │   └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases \
@@ -23,6 +24,7 @@ SeleniumTestNG_POM/
 │   │   │   ├── VerificationCodeTest \
 │   │   │   ├── FlightsTabTest \
 │   │   │   ├── SelectFlightTest \
+│   │   │   │   ├── TravelerDetailsTest \
 ├── config.properties &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # URL, browser, wait settings  
 ├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Secure email config (dotenv)  
 ├── testng.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # TestNG suite configuration  
@@ -35,10 +37,12 @@ SeleniumTestNG_POM/
 - Complete authentication flow, end-to-end testing of sign-in process including email verification
 - Email Integration involving the Logging into ProtonMail to retrieve verification code
 - Flight Booking Automation: Comprehensive flight search and selection workflow
-- Advanced Retry Logic: Smart date selection and flight availability handling
-- Selenium WebDriver with Chrome and Firefox support 
-- TestNG-based test orchestration with suite-level setup/teardown 
+- Traveler Details Management: Complete passenger information entry with conditional field handling
+- Advanced Retry Logic: Includes sophisticated retry logic to handle dynamic content and availability issues
+- Conditional field handling ensures tests adapt to varying form requirements
+- TestNG-based test orchestration with suite-level setup/teardown
 - Dotenv Integration for secure credential management 
+- Selenium WebDriver with Chrome and Firefox support 
 - Page Object Model (POM) design pattern 
 - Tab handling and navigation 
 - Explicit and implicit waits
@@ -61,6 +65,19 @@ Create a .env file in the root directory:
     PROPERTIES_FILE_PATH = "your_file_path_of_config.properties_file"
     USER_EMAIL = "your_protonmail@email.com"
     PASSWORD = "your_protonmail_password"
+    FIRSTNAME1 = "Traveler1FirstName"
+    LASTNAME1 = "Traveler1LastName"
+    BIRTHMONTH1 = "birth_month_value_1"
+    NATIONALITY1 = "nationality_code_1"
+    BIRTHDATE1 = "DD_forTraveler1"
+    BIRTHYEAR1 = "YYYY_forTraveler1"
+    FIRSTNAME2 = "Traveler2FirstName"
+    LASTNAME2 = "Traveler2LastName"
+    BIRTHMONTH2 = "birth_month_value_2"
+    NATIONALITY2 = "nationality_code_2"
+    BIRTHDATE2 = "DD_forTraveler2"
+    BIRTHYEAR2 = "YYYY_forTraveler2"
+    PHONENUM = "your_phone_number"
  
 3.  **Download Dependencies & Verify Setup**  
     Ensure Maven is installed, then run:
@@ -106,7 +123,13 @@ The tests execute in a continuous flow within a single browser session using adv
 - Selects cheapest flight
 - Chooses standard ticket type 
 - Navigates to traveler details page
-7. ### Suite Teardown (BaseTest)
+7. ### Traveler Details Entry (TravelerDetailsTest)
+- Traveler 1 Details: Enters first passenger details with conditional field handling for DOB and nationality 
+- Traveler 2 Details: Enters second passenger details with conditional field handling for DOB and nationality
+- Baggage Selection: Conditionally adds cabin baggage if available 
+- Contact Information: Enters phone number with country code selection 
+- Navigation: Proceeds to next step (extras) completing the traveler details step
+8. ### Suite Teardown (BaseTest)
 - Browser cleanup and session termination
 
 ## TestNG Configuration

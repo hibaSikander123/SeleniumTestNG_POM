@@ -73,10 +73,11 @@ public class SelectFlightPage {
     // Select ticket type to standard ticket (while handling dialgue box if appear in the process)
     public void selectTicketType() {
         contStandardBool = false;
+        List<WebElement> continueBtn = driver.findElements(locatorContinueBtn);
 
-        while (!contStandardBool) {
-            WebElement ContinueBtn = wait.until(ExpectedConditions.elementToBeClickable(locatorContinueBtn));
-            ContinueBtn.click();
+        // Click the continue button if it appears
+        while (!contStandardBool && !continueBtn.isEmpty()) {
+            continueBtn.get(0).click();
 
             // cross out dialogue box if appears
             List<WebElement> dialogueBoxCrossBtn = driver.findElements(locatorDialogueBox);
