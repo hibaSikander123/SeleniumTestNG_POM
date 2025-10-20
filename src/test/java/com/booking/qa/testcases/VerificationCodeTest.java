@@ -26,6 +26,15 @@ public class VerificationCodeTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "emailLoginTest")
+    public void emailInboxStabilityTest()
+    {
+        verificationCodePage.refreshEmailInbox();
+        String verifyInboxStability = verificationCodePage.fetchSenderName();
+        Assert.assertEquals(verifyInboxStability, "Booking.com", "Inbox stability is incorrect!");
+    }
+
+
+    @Test(dependsOnMethods = "emailInboxStabilityTest")
     public void goToInboxTest() {
         verificationCodePage.goToLatestInbox();
         String verifyLatestEmail = verificationCodePage.fetchLatestInboxTitle();

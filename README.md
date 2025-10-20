@@ -1,6 +1,6 @@
 # Booking.com Web Automation Test Suite
 
-A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete sign-in authentication flow and flight booking functionality including travelers details entry. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
+A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete sign-in authentication flow and flight booking functionality including travelers details entry and extras selection. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
 
 SeleniumTestNG_POM/  
 ├── src/  
@@ -15,6 +15,7 @@ SeleniumTestNG_POM/
 │   │   │   │   ├── FlightsTabPage \
 │   │   │   │   ├── SelectFlightPage \
 │   │   │   │   ├── TravelerDetailsPage \
+│   │   │   │   ├── ExtrasPage \
 │   │   │   └── util/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
 │   └── test/  
 │   │   └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases \
@@ -24,7 +25,8 @@ SeleniumTestNG_POM/
 │   │   │   ├── VerificationCodeTest \
 │   │   │   ├── FlightsTabTest \
 │   │   │   ├── SelectFlightTest \
-│   │   │   │   ├── TravelerDetailsTest \
+│   │   │   ├── TravelerDetailsTest \
+│   │   │   ├── ExtrasTest \
 ├── config.properties &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # URL, browser, wait settings  
 ├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Secure email config (dotenv)  
 ├── testng.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # TestNG suite configuration  
@@ -38,6 +40,7 @@ SeleniumTestNG_POM/
 - Email Integration involving the Logging into ProtonMail to retrieve verification code
 - Flight Booking Automation: Comprehensive flight search and selection workflow
 - Traveler Details Management: Complete passenger information entry with conditional field handling
+- Extras Selection: Flexible ticket and travel protection insurance selection with conditional handling
 - Advanced Retry Logic: Includes sophisticated retry logic to handle dynamic content and availability issues
 - Conditional field handling ensures tests adapt to varying form requirements
 - TestNG-based test orchestration with suite-level setup/teardown
@@ -129,7 +132,11 @@ The tests execute in a continuous flow within a single browser session using adv
 - Baggage Selection: Conditionally adds cabin baggage if available 
 - Contact Information: Enters phone number with country code selection 
 - Navigation: Proceeds to next step (extras) completing the traveler details step
-8. ### Suite Teardown (BaseTest)
+8. ### Extras Selection (ExtrasTest)
+- Flexible Ticket: Conditionally selects flexible ticket option if available 
+- Travel Protection: Conditionally adds travel protection insurance if available 
+- Navigation: Proceeds to seat selection page completing the extras step
+9. ### Suite Teardown (BaseTest)
 - Browser cleanup and session termination
 
 ## TestNG Configuration

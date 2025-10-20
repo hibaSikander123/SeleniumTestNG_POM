@@ -31,6 +31,7 @@ public class TravelerDetailsPage {
     private By locatorPhoneCodeInput = By.xpath("//div[@data-testid = \"checkout_form_phone\"]//select/option[@data-key = \"de\"]");
     private By phoneInput = By.xpath("//div[@data-testid = \"checkout_form_phone\"]//input[contains(@class, \"InputText-module__control\")]");
     private By locatorNextBtn1 = By.xpath("//span[contains(@class, 'Button-module__text') and contains(., 'Next')]");
+   // private By email = By.xpath("//input[@name = \"booker.email\"]");
 
     @FindBy(xpath = "//span[contains(@class, 'Button-module__text') and contains(., \"Edit this traveler's details\")]")
     WebElement travelerDetailsEditBTn;
@@ -55,7 +56,6 @@ public class TravelerDetailsPage {
         driver.findElement(genderInput1).click();
 
         List<WebElement> birthMonthDropdown1 = driver.findElements(By.xpath("//div[contains(@class, \"SheetContainer-module__body\")]/div/div[4]/fieldset/div/div/div/div/select/option[@data-key = " + birthMonth1 + "]"));
-        List<WebElement> nationalityInput1 = driver.findElements(By.xpath("//select[@name = 'passengers.0.nationality']/option[@data-key = " + nationality1 + "]"));
 
         //Check if DOB is asked in traveler_1's detail, if yes then enter
         if (!birthMonthDropdown1.isEmpty()) {
@@ -65,6 +65,9 @@ public class TravelerDetailsPage {
         } else {
             System.out.println("DOB wasn't asked for passenger 1");
         }
+
+        List<WebElement> nationalityInput1 = driver.findElements(By.xpath("//select[@name = 'passengers.0.nationality']/option[@data-key = '" + nationality1 + "']"));
+
         //Check if nationality is asked in traveler_1's detail, if yes then enter
         if (!nationalityInput1.isEmpty()) {
             nationalityInput1.get(0).click();
@@ -87,7 +90,7 @@ public class TravelerDetailsPage {
         driver.findElement(genderInput2).click();
 
         List<WebElement> birthMonthDropdown2 = driver.findElements(By.xpath("//div[contains(@class, 'SheetContainer-module__body')]/div/div[4]/fieldset/div/div/div/div/select/option[@data-key = " + birthMonth2 + "]"));
-        List<WebElement> nationalityInput2 = driver.findElements(By.xpath("//select[@name = 'passengers.1.nationality']/option[@data-key =" + nationality2 + "]"));
+        List<WebElement> nationalityInput2 = driver.findElements(By.xpath("//select[@name = 'passengers.1.nationality']/option[@data-key ='" + nationality2 + "']"));
 
         //Check if DOB is asked in traveler_2's detail, if yes then enter
         if (!birthMonthDropdown2.isEmpty()) {
@@ -128,6 +131,11 @@ public class TravelerDetailsPage {
 
     // Enter phone num
     public void enterPhoneNum(String phoneNum){
+
+      //  driver.findElement(email).sendKeys("fwafbkjw@gmail.com");
+      //  System.out.println("email enetered");
+
+
         WebElement phoneCodeInput = wait.until(ExpectedConditions.elementToBeClickable(locatorPhoneCodeInput));
         phoneCodeInput.click();
         driver.findElement(phoneInput).sendKeys(phoneNum);
