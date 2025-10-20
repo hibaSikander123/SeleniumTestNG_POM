@@ -27,6 +27,9 @@ public class VerificationCodePage {
 
     @FindBy(xpath = "//div[@class = \"w-full\"]//h2[@title = \"Inbox\"]")
     WebElement inboxTitle;
+    @FindBy(xpath = "//span[@data-testid='message-column:sender-address']/span")
+    WebElement inboxSenderName;
+
 
     // Initializing page factory / page object
     public VerificationCodePage(WebDriver driver, WebDriverWait wait) {
@@ -51,13 +54,21 @@ public class VerificationCodePage {
         return new VerificationCodePage(driver, wait);
     }
 
+    public void refreshEmailInbox() {
+        driver.navigate().refresh();
+    }
+
+    public String fetchSenderName() {
+        return wait.until(ExpectedConditions.visibilityOf(inboxSenderName)).getText();
+    }
+
     public String validateLoginEmail() {
         return inboxTitle.getText();
     }
 
     // Open latest email message received
     public void goToLatestInbox() {
-        driver.navigate().refresh();
+       // driver.navigate().refresh();
         By emailInbox = By.xpath("//div[@class = 'w-full shrink-0']//div[@style='--index: 0;']");
         WebElement emailMsg = emailWait.until(ExpectedConditions.elementToBeClickable(emailInbox));
         emailMsg.click();
