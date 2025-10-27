@@ -10,6 +10,7 @@
             <class name="com.booking.qa.testcases.SelectFlightTest"/>
             <class name="com.booking.qa.testcases.TravelerDetailsTest"/>
             <class name="com.booking.qa.testcases.ExtrasTest"/>
+            <class name="com.booking.qa.testcases.SeatSelectionTest"/>
         </classes>
     </test>
 </suite>

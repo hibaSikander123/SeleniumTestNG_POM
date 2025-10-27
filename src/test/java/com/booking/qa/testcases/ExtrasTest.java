@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 public class ExtrasTest extends BaseTest{
 
     private ExtrasPage extrasPage;
+    public static String nextPageType;
 
     @BeforeMethod
     public void settingUp() {
@@ -15,8 +16,8 @@ public class ExtrasTest extends BaseTest{
     }
 
     @Test(dependsOnMethods = "com.booking.qa.testcases.TravelerDetailsTest.goToExtrasPageTest")
-    public void selectTicketTypeTest () {
-        String ticketTypeResult = extrasPage.selectTicketType();
+    public void selectTicketTypeExtrasTest () {
+        String ticketTypeResult = extrasPage.selectTicketTypeExtras();
 
         if("FlexTicketAdded".equals(ticketTypeResult)){
         String verifyFlexTcktSelection = extrasPage.fetchFlexTcktText();
@@ -39,9 +40,19 @@ public class ExtrasTest extends BaseTest{
     }
 
     @Test(dependsOnMethods = "selectTravelProtectionTest")
-    public void goToSeatSelectionPageTest () {
-        extrasPage.goToSeatSelectionPage();
-        String verifySeatSelectionReach = extrasPage.fetchSeatSelectionText();
-        Assert.assertEquals(verifySeatSelectionReach, "Select your seat", "Unable to click next button succesfully to reach the seat selection step");
+    public void goToNextPageTest() {
+        nextPageType = extrasPage.goToNextPage();
+        System.out.println("Navigated to: " + nextPageType);
+       // String verifySeatSelectionReach = extrasPage.fetchSeatSelectionText();
+       // Assert.assertEquals(verifySeatSelectionReach, "Select your seat", "Unable to click next button succesfully to reach the seat selection step");
+        if ("seatSelection".equals(nextPageType)) {
+            String verifySeatSelectionReach = extrasPage.fetchSeatSelectionText();
+            Assert.assertEquals(verifySeatSelectionReach, "Select your seat", "Unable to reach the seat selection step");
+        } else if ("checkAndPay".equals(nextPageType)) {
+            String verifyCheckAndPayReach = extrasPage.fetchCheckAndPayText();
+            Assert.assertEquals(verifyCheckAndPayReach, "Check and pay", "Unable to reach the check and pay step");
+        } else {
+            Assert.fail("Unable to determine the next page after extras");
+        }
     }
 }

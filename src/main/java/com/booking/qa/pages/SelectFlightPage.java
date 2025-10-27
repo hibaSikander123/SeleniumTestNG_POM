@@ -17,7 +17,7 @@ public class SelectFlightPage {
     private  boolean contStandardBool;
     private By locatorViewDetailsBtn = By.xpath("//div[@id= 'flight-card-1' ]//span[contains(@class, 'Button-module__text') and contains(text(), 'View details')]");
     private By locatorSelectDetailsBtn = By.xpath("//div[@data-testid='flight_details_inner_modal_select_button']/button");
-    private By locatorContinueBtn = By.xpath("//button[@data-testid = \"ticket_type_cta_standard\" or @data-testid = \"branded_fare_cta_0\"]");
+    private By locatorContinueBtn = By.xpath("//button[@data-testid = \"ticket_type_cta_flexible\" or @data-testid = \"branded_fare_cta_0\"]");
     private By locatorDialogueBox = By.xpath("//div[contains (@class, 'DismissibleContainer-module__root')]//button");
 
     @FindBy(xpath = "//span[contains(@class, 'Text-module__root--variant-body') and contains(.,'Cheapest')]")
@@ -26,8 +26,8 @@ public class SelectFlightPage {
     WebElement locatorCheapestTag;
     @FindBy(xpath = "//h1[contains(@class, 'Text-module__root--variant-headline_1')]")
     WebElement locatorTicketType;
-    @FindBy(xpath = "//strong[contains(@class, 'Text-module__root--variant-strong_2___BnUld NavigationProgress-module__title') and contains(., 'Your details')]")
-    WebElement locatorTravellerDetailPage;
+    @FindBy(xpath = "//div[@data-testid='upb_title-extra-flexibleticket']")
+    WebElement flexTicketConfirm;
 
     // Initializing page factory / page object
     public SelectFlightPage(WebDriver driver, WebDriverWait wait) {
@@ -89,7 +89,7 @@ public class SelectFlightPage {
         }
     }
 
-    public String fetchTravellerDetailsPage(){
-            return locatorTravellerDetailPage.getText();
+    public String fetchFlexTcktConfirm(){
+            return flexTicketConfirm.getText();
     }
 }

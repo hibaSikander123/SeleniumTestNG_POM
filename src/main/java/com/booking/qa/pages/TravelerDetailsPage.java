@@ -31,7 +31,6 @@ public class TravelerDetailsPage {
     private By locatorPhoneCodeInput = By.xpath("//div[@data-testid = \"checkout_form_phone\"]//select/option[@data-key = \"de\"]");
     private By phoneInput = By.xpath("//div[@data-testid = \"checkout_form_phone\"]//input[contains(@class, \"InputText-module__control\")]");
     private By locatorNextBtn1 = By.xpath("//span[contains(@class, 'Button-module__text') and contains(., 'Next')]");
-   // private By email = By.xpath("//input[@name = \"booker.email\"]");
 
     @FindBy(xpath = "//span[contains(@class, 'Button-module__text') and contains(., \"Edit this traveler's details\")]")
     WebElement travelerDetailsEditBTn;
@@ -128,13 +127,8 @@ public class TravelerDetailsPage {
     public String fetchcabinBagSelectionText() {
         return cabinBagCheckedIn.getText();
     }
-
     // Enter phone num
     public void enterPhoneNum(String phoneNum){
-
-      //  driver.findElement(email).sendKeys("fwafbkjw@gmail.com");
-      //  System.out.println("email enetered");
-
 
         WebElement phoneCodeInput = wait.until(ExpectedConditions.elementToBeClickable(locatorPhoneCodeInput));
         phoneCodeInput.click();

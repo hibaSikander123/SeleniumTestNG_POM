@@ -30,7 +30,7 @@ public class SelectFlightTest extends BaseTest{
     @Test(dependsOnMethods = "selectCheapestFlightTest")
     public void selectTicketTypeTest () {
         selectFlightPage.selectTicketType();
-        String travellerDetailPage = selectFlightPage.fetchTravellerDetailsPage();
-        Assert.assertEquals(travellerDetailPage, "Your details", "Unable to go to Traveller Details Page");
+        String travellerDetailPage = selectFlightPage.fetchFlexTcktConfirm();
+        Assert.assertEquals(travellerDetailPage, "Flexible ticket", "Unable to select Flexible Ticket");
     }
 }
