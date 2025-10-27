@@ -1,6 +1,6 @@
 # Booking.com Web Automation Test Suite
 
-A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete sign-in authentication flow and flight booking functionality including travelers details entry and extras selection. This project demonstrates modular, maintainable test automation structure with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
+A comprehensive  Page Object Model (POM) based Selenium automation framework for testing the Booking.com website's complete flight booking workflow. This project demonstrates modular, maintainable test automation with multi-browser support, environment-based configuration, and TestNG-based test orchestration.
 
 SeleniumTestNG_POM/  
 ├── src/  
@@ -16,6 +16,7 @@ SeleniumTestNG_POM/
 │   │   │   │   ├── SelectFlightPage \
 │   │   │   │   ├── TravelerDetailsPage \
 │   │   │   │   ├── ExtrasPage \
+│   │   │   │   ├── SeatSelectionPage \
 │   │   │   └── util/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Reusable utility constants  
 │   └── test/  
 │   │   └── java/com/booking/qa/testcases/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# TestNG Test Cases \
@@ -27,6 +28,7 @@ SeleniumTestNG_POM/
 │   │   │   ├── SelectFlightTest \
 │   │   │   ├── TravelerDetailsTest \
 │   │   │   ├── ExtrasTest \
+│   │   │   ├── SeatSelectionTest \
 ├── config.properties &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # URL, browser, wait settings  
 ├── .env &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Secure email config (dotenv)  
 ├── testng.xml &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # TestNG suite configuration  
@@ -36,19 +38,19 @@ SeleniumTestNG_POM/
 
 ## Features
 
-- Complete authentication flow, end-to-end testing of sign-in process including email verification
-- Email Integration involving the Logging into ProtonMail to retrieve verification code
-- Flight Booking Automation: Comprehensive flight search and selection workflow
-- Traveler Details Management: Complete passenger information entry with conditional field handling
-- Extras Selection: Flexible ticket and travel protection insurance selection with conditional handling
-- Advanced Retry Logic: Includes sophisticated retry logic to handle dynamic content and availability issues
-- Conditional field handling ensures tests adapt to varying form requirements
-- TestNG-based test orchestration with suite-level setup/teardown
-- Dotenv Integration for secure credential management 
-- Selenium WebDriver with Chrome and Firefox support 
-- Page Object Model (POM) design pattern 
-- Tab handling and navigation 
-- Explicit and implicit waits
+- **Complete authentication flow**: end-to-end testing of sign-in process including email verification
+- **Email Integration**: Automated login to ProtonMail to retrieve verification codes
+- **Flight Booking Automation**: Comprehensive flight search,filtering and selection workflow
+- **Traveler Details Management**: Complete passenger information entry with conditional field handling
+- **Extras Selection**: Flexible ticket and travel protection insurance with conditional availability checks
+- **Seat Selection**: Automated seat selection with fallback handling
+- **Advanced Retry Logic**: Includes sophisticated retry logic to handle dynamic content and availability issues
+- **TestNG-based test orchestration**: with suite-level setup/teardown
+- **Dotenv Integration**: for secure credential management 
+- **Multi-Browser Support**: Chrome and Firefox support via Selenium WebDriverManager
+- **Page Object Model (POM)**: Maintainable and reusable code structure
+- **Tab handling and navigation** 
+- **Explicit and implicit waits**
 
 ## Prerequisites
 - Java 21 or higher 
@@ -135,8 +137,11 @@ The tests execute in a continuous flow within a single browser session using adv
 8. ### Extras Selection (ExtrasTest)
 - Flexible Ticket: Conditionally selects flexible ticket option if available 
 - Travel Protection: Conditionally adds travel protection insurance if available 
-- Navigation: Proceeds to seat selection page completing the extras step
-9. ### Suite Teardown (BaseTest)
+- Navigation: Navigates to next step (seat selection or direct to payment)
+9. ### Seat Selection (SeatSelectionTest)
+- First Available Seat: Selects first available seat (if seat selection page is present)
+- Checkout: Proceeds to final checkout step
+10. ### Suite Teardown (BaseTest)
 - Browser cleanup and session termination
 
 ## TestNG Configuration
@@ -144,7 +149,9 @@ The test execution is controlled by `testng.xml` which:
 - Defines test execution order between classes 
 - Maintains a single browser session across all tests 
 - Uses `preserve-order="true"` to ensure sequential execution 
-- Sets up dependencies between test methods
+- Method-level dependencies ensuring proper workflow
+- Suite-level setup and teardown
+
 
 
 ## ️ Tech Stack
@@ -162,7 +169,5 @@ The test execution is controlled by `testng.xml` which:
 - Ensure browser pop-ups or tab opening restrictions are disabled 
 - Credentials are managed securely via the .env file (do not commit this to version control)
 
-# Future Improvements
-- Extend tests for further flight booking workflows
 
 
